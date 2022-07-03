@@ -2,7 +2,9 @@ package com.shopme.admin.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +39,19 @@ public class RoleRepositoryTests {
 		Role roleShipper = new Role("Shipper", "view products, view orders and update order status");
 		Role roleAssistant = new Role("Assistant", "manage questions and reviews");
 		repo.saveAll(List.of(roleSalesperson, roleEditor, roleShipper, roleAssistant));
+	}
+	
+	@Test
+	public void testGetAllRoles() {
+		List<Role> results = new ArrayList<Role>();
+		repo.findAll().forEach(results::add);
+		System.out.println(results);
+	}
+	
+	@Test
+	public void testGetRoleById() {
+		int theId=1;
+		Optional<Role> role = repo.findById(theId);
+		System.out.println(role.get().getDescription());
 	}
 }
